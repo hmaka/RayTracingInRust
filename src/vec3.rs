@@ -1,6 +1,6 @@
 use std::{
     assert_eq, fmt,
-    ops::{Add, AddAssign, Sub, SubAssign},
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign},
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -72,6 +72,49 @@ impl SubAssign for Vec3 {
     }
 }
 
+impl Mul<f32> for Vec3 {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self {
+        Self {
+            x: self.x * rhs,
+            y: self.y * rhs,
+            z: self.z * rhs,
+        }
+    }
+}
+
+impl MulAssign<f32> for Vec3 {
+    fn mul_assign(&mut self, rhs: f32) {
+        *self = Self {
+            x: self.x * rhs,
+            y: self.y * rhs,
+            z: self.z * rhs,
+        }
+    }
+}
+
+impl Div<f32> for Vec3 {
+    type Output = Self;
+    fn div(self, rhs: f32) -> Self::Output {
+        Self {
+            x: self.x / rhs,
+            y: self.y / rhs,
+            z: self.z / rhs,
+        }
+    }
+}
+
+impl DivAssign<f32> for Vec3 {
+    fn div_assign(&mut self, rhs: f32) {
+        *self = Self {
+            x: self.x / rhs,
+            y: self.y / rhs,
+            z: self.z / rhs,
+        }
+    }
+}
+
 #[cfg(test)]
 #[test]
 fn make_new_vec() {
@@ -125,7 +168,7 @@ fn subtract_vectors() {
 
 #[test]
 fn subtract_assign() {
-    let mut v1: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+    let v1: Vec3 = Vec3::new(1f32, 1f32, 1f32);
     let mut v2: Vec3 = Vec3::new(4.1f32, 5.6f32, 9f32);
 
     v2 -= v1;
@@ -135,27 +178,45 @@ fn subtract_assign() {
     assert_eq!(v2, expected);
 }
 
-//
-//#[test]
-//fn constant_multiplication_vector() {
-//    let v1: vec3 = vec3::new(1f32, 1f32, 1f32);
-//    let c: f32 = 16f32;
-//
-//    let v1 = v1 * c;
-//    let expected: vec3 = vec3::new(16f32, 16f32, 16f32);
-//    assert_eq!(v1, expected);
-//}
-//
-//#[test]
-//fn const_division_vector() {
-//    let v1: vec3 = vec3::new(16f32, 16f32, 16f32);
-//    let c: f32 = 16f32;
-//
-//    let v1 = v1 / c;
-//    let expected: vec3 = vec3::new(1f32, 1f32, 1f32);
-//    assert_eq!(v1, expected);
-//}
-//
+#[test]
+fn constant_multiplication_vector() {
+    let v1: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+    let c: f32 = 16f32;
+
+    let v1 = v1 * c;
+    let expected: Vec3 = Vec3::new(16f32, 16f32, 16f32);
+    assert_eq!(v1, expected);
+}
+
+#[test]
+fn constant_multiplication_assign() {
+    let mut v1: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+    let c: f32 = 16f32;
+
+    v1 *= c;
+    let expected: Vec3 = Vec3::new(16f32, 16f32, 16f32);
+    assert_eq!(v1, expected);
+}
+
+#[test]
+fn const_division_vector() {
+    let v1: Vec3 = Vec3::new(16f32, 16f32, 16f32);
+    let c: f32 = 16f32;
+
+    let v1 = v1 / c;
+    let expected: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+    assert_eq!(v1, expected);
+}
+
+#[test]
+fn const_division_assign() {
+    let mut v1: Vec3 = Vec3::new(16f32, 16f32, 16f32);
+    let c: f32 = 16f32;
+
+    v1 /= c;
+    let expected: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+}
+
 //#[test]
 //fn length_squared() {
 //    let v1: vec3 = vec3::new(4f32, 3f32, 8f32);
