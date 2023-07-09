@@ -14,6 +14,14 @@ impl Vec3 {
     fn new(x: f32, y: f32, z: f32) -> Vec3 {
         return Vec3 { x, y, z };
     }
+
+    fn length(&self) -> f32 {
+        return self.length_squared().sqrt();
+    }
+
+    fn length_squared(&self) -> f32 {
+        return (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
+    }
 }
 
 impl fmt::Display for Vec3 {
@@ -217,20 +225,20 @@ fn const_division_assign() {
     let expected: Vec3 = Vec3::new(1f32, 1f32, 1f32);
 }
 
-//#[test]
-//fn length_squared() {
-//    let v1: vec3 = vec3::new(4f32, 3f32, 8f32);
-//
-//    let lsqr: f32 = v1.length_squared();
-//
-//    assert_eq!(lsqr, 89f32);
-//}
-//
-//#[test]
-//fn length() {
-//    let v1: vec3 = vec3::new(4f32, 3f32, 8f32);
-//
-//    let len: f32 = v1.length();
-//
-//    assert_eq!(len, 9.4339811f32);
-//}
+#[test]
+fn length_squared() {
+    let v1: Vec3 = Vec3::new(4f32, 3f32, 8f32);
+
+    let lsqr: f32 = v1.length_squared();
+
+    assert_eq!(lsqr, 89f32);
+}
+
+#[test]
+fn length() {
+    let v1: Vec3 = Vec3::new(4f32, 3f32, 8f32);
+
+    let len: f32 = v1.length();
+
+    assert_eq!(len, 9.4339811f32);
+}
