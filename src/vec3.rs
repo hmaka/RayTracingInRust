@@ -22,6 +22,10 @@ impl Vec3 {
     fn length_squared(&self) -> f32 {
         return (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
     }
+
+    fn unit_vector(&self) -> Vec3 {
+        return self.clone() / self.length();
+    }
 }
 
 impl fmt::Display for Vec3 {
@@ -241,4 +245,12 @@ fn length() {
     let len: f32 = v1.length();
 
     assert_eq!(len, 9.4339811f32);
+}
+
+#[test]
+fn unit_vector() {
+    let v1: Vec3 = Vec3::new(31f32, 45.4f32, 18.009f32);
+    let expected = Vec3::new(0.5358797f32, 0.78480446f32, 0.31131154f32);
+
+    assert_eq!(v1.unit_vector(), expected);
 }
