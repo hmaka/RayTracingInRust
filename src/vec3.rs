@@ -26,6 +26,10 @@ impl Vec3 {
     fn unit_vector(&self) -> Vec3 {
         return self.clone() / self.length();
     }
+
+    fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
+        return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+    }
 }
 
 impl fmt::Display for Vec3 {
@@ -253,4 +257,12 @@ fn unit_vector() {
     let expected = Vec3::new(0.5358797f32, 0.78480446f32, 0.31131154f32);
 
     assert_eq!(v1.unit_vector(), expected);
+}
+
+#[test]
+fn dot_product() {
+    let v1: Vec3 = Vec3::new(2f32, 3f32, 4f32);
+    let v2: Vec3 = Vec3::new(4f32, 4f32, 4f32);
+
+    assert_eq!(Vec3::dot(&v1, &v2), 36f32);
 }
