@@ -30,6 +30,14 @@ impl Vec3 {
     fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
         return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
     }
+
+    fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
+        Vec3 {
+            x: (v1.y * v2.z) - (v1.z * v2.y),
+            y: (v1.z * v2.x) - (v1.x * v2.z),
+            z: (v1.x * v2.y) - (v1.y * v2.x),
+        }
+    }
 }
 
 impl fmt::Display for Vec3 {
@@ -265,4 +273,13 @@ fn dot_product() {
     let v2: Vec3 = Vec3::new(4f32, 4f32, 4f32);
 
     assert_eq!(Vec3::dot(&v1, &v2), 36f32);
+}
+
+#[test]
+fn cross_product() {
+    let v1: Vec3 = Vec3::new(2f32, 3f32, 4f32);
+    let v2: Vec3 = Vec3::new(4f32, 4f32, 4f32);
+    let expected: Vec3 = Vec3::new(-4f32, 8f32, -4f32);
+
+    assert_eq!(Vec3::cross(&v1, &v2), expected);
 }
