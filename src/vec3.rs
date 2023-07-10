@@ -1,42 +1,56 @@
 use std::{
     assert_eq, fmt,
+    io::Write,
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign},
 };
 
 #[derive(Debug, Clone, Copy)]
-struct Vec3 {
+pub struct Vec3 {
     x: f32,
     y: f32,
     z: f32,
 }
 
 impl Vec3 {
-    fn new(x: f32, y: f32, z: f32) -> Vec3 {
+    pub fn new(x: f32, y: f32, z: f32) -> Vec3 {
         return Vec3 { x, y, z };
     }
 
-    fn length(&self) -> f32 {
+    pub fn length(&self) -> f32 {
         return self.length_squared().sqrt();
     }
 
-    fn length_squared(&self) -> f32 {
+    pub fn length_squared(&self) -> f32 {
         return (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
     }
 
-    fn unit_vector(&self) -> Vec3 {
+    pub fn unit_vector(&self) -> Vec3 {
         return self.clone() / self.length();
     }
 
-    fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
+    pub fn dot(v1: &Vec3, v2: &Vec3) -> f32 {
         return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
     }
 
-    fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
+    pub fn cross(v1: &Vec3, v2: &Vec3) -> Vec3 {
         Vec3 {
             x: (v1.y * v2.z) - (v1.z * v2.y),
             y: (v1.z * v2.x) - (v1.x * v2.z),
             z: (v1.x * v2.y) - (v1.y * v2.x),
         }
+    }
+
+    pub fn write_color(&self) {
+        let mut stdout = std::io::stdout();
+        write!(
+            &mut stdout,
+            "{} {} {}\n",
+            (255.999 * self.x) as i32,
+            (255.999 * self.y) as i32,
+            (255.999 * self.z) as i32
+        )
+        .expect("Error writing to stdout");
+        stdout.flush().expect("Error flushing stdout");
     }
 }
 
