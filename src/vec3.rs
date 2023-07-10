@@ -16,6 +16,18 @@ impl Vec3 {
         return Vec3 { x, y, z };
     }
 
+    pub fn x(&self) -> f32 {
+        self.x
+    }
+
+    pub fn y(&self) -> f32 {
+        self.y
+    }
+
+    pub fn z(&self) -> f32 {
+        self.z
+    }
+
     pub fn length(&self) -> f32 {
         return self.length_squared().sqrt();
     }
