@@ -1,3 +1,5 @@
+use std::assert_eq;
+
 use crate::vec3::Vec3;
 
 #[derive(Debug, Clone, Copy)]
@@ -37,4 +39,14 @@ fn new() {
 
     assert_eq!(r1.origin(), v1);
     assert_eq!(r1.direction(), v2)
+}
+
+#[test]
+fn at() {
+    let v1: Vec3 = Vec3::new(0f32, 0f32, 0f32);
+    let v2: Vec3 = Vec3::new(1f32, 1f32, 1f32);
+
+    let r1: Ray = Ray::new(&v1, &v2);
+
+    assert_eq!(r1.at(5f32), Vec3::new(5f32, 5f32, 5f32));
 }
