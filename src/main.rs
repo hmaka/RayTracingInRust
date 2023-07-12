@@ -8,10 +8,10 @@ fn hit_sphere(center: &Vec3, radius: f32, r: &Ray) -> bool {
     let center = *center;
     let a = Vec3::dot(&r.direction(), &r.direction());
     let oc = r.origin() - center;
-    let b = 2.0 * Vec3::dot(&r.direction(), &oc);
+    let b = Vec3::dot(&r.direction(), &oc);
     let c = Vec3::dot(&oc, &oc) - radius * radius;
 
-    let discriminant = (b * b) - (4.0 * a * c);
+    let discriminant = (b * b) - (a * c);
 
     return if discriminant > 0.0 { true } else { false };
 }
