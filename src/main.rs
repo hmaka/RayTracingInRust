@@ -1,9 +1,25 @@
 pub mod ray;
 pub mod vec3;
+
 use ray::Ray;
 use vec3::Vec3;
 
+fn hit_sphere(center: &Vec3, radius: f32, r: &Ray) -> bool {
+    let center = *center;
+    let a = Vec3::dot(&r.direction(), &r.direction());
+    let oc = r.origin() - center;
+    let b = 2.0 * Vec3::dot(&r.direction(), &oc);
+    let c = Vec3::dot(&oc, &oc) - radius * radius;
+
+    let discriminant = (b * b) - (4.0 * a * c);
+
+    return if discriminant > 0.0 { true } else { false };
+}
+
 fn ray_color(ray: &Ray) -> Vec3 {
+    if hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5, ray) {
+        return Vec3::new(1.0, 0.0, 0.0);
+    }
     let unit_direction: Vec3 = ray.direction().unit_vector();
     let t: f32 = 0.5f32 * (unit_direction.y() + 1f32);
 
