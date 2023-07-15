@@ -2,6 +2,9 @@ pub mod hittable;
 pub mod ray;
 pub mod vec3;
 
+use std::f32::INFINITY;
+
+use hittable::HitRecord;
 use ray::Ray;
 use vec3::Vec3;
 
@@ -21,16 +24,16 @@ fn hit_sphere(center: &Vec3, radius: f32, r: &Ray) -> f32 {
     };
 }
 
-fn ray_color(ray: &Ray) -> Vec3 {
-    let mut t = hit_sphere(&Vec3::new(0.0, 0.0, -1.0), 0.5, ray);
-    if t > 0.0 {
-        let mut N: Vec3 = ray.at(t) - Vec3::new(0.0, 0.0, -1.0);
-        N = N.unit_vector();
+fn ray_color(ray: &Ray, world: &HitList) -> Vec3 {
+    // might need to change this default record
+    let rec: HitRecord = HitRecord::new(&Vec3::new(0.0, 0.0, 0.0), &Vec3::new(0.0, 0.0, 0.0), 0.0);
 
-        return Vec3::new(N.x() + 1.0, N.y() + 1.0, N.z() + 1.0) * 0.5;
+    if world.hit(ray, 0, INFINITY, rec) {
+        return (rec.normal + Vec3::new(1.0, 1.0, 1.0)) * 0.5;
     }
+
     let unit_direction: Vec3 = ray.direction().unit_vector();
-    t = 0.5 * (unit_direction.y() + 1f32);
+    let t = (unit_direction.y() + 1.0) * 0.5;
 
     return (Vec3::new(1f32, 1f32, 1f32) * (1f32 - t)) + (Vec3::new(0.5f32, 0.7f32, 1f32) * t);
 }
@@ -40,6 +43,12 @@ fn main() {
     let aspect_ratio: f32 = 16.0 / 9.0;
     let image_width: i32 = 400;
     let image_height: i32 = (image_width as f32 / aspect_ratio) as i32;
+
+    // World
+    let world: HittableList = HittableList::new();
+    // Need to figure out what to put in this add
+    world.add();
+    world.add();
 
     // Camera
     let viewport_height: f32 = 2.0;

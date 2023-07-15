@@ -1,9 +1,19 @@
 use crate::{ray::Ray, vec3::Vec3};
 
 pub struct HitRecord {
-    p: Vec3,
-    normal: Vec3,
-    t: f32,
+    pub p: Vec3,
+    pub normal: Vec3,
+    pub t: f32,
+}
+
+impl HitRecord {
+    pub fn new(p: &Vec3, normal: &Vec3, t: f32) -> HitRecord {
+        HitRecord {
+            p: p.clone(),
+            normal: normal.clone(),
+            t,
+        }
+    }
 }
 
 trait Hittable {
@@ -22,4 +32,8 @@ impl Sphere {
             radius: radius.clone(),
         }
     }
+}
+
+impl Hittable for Sphere {
+    fn hit(r: &Ray, t_min: f32, t_max: f32, rec: &HitRecord) {}
 }
