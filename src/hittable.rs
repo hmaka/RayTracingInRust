@@ -9,3 +9,17 @@ pub struct HitRecord {
 trait Hittable {
     fn hit(r: &Ray, t_min: f32, t_max: f32, rec: &HitRecord);
 }
+
+pub struct Sphere {
+    center: Vec3,
+    radius: Vec3,
+}
+
+impl Sphere {
+    fn new(center: &Vec3, radius: &Vec3) -> Sphere {
+        Sphere {
+            center: center.clone(),
+            radius: radius.clone(),
+        }
+    }
+}
